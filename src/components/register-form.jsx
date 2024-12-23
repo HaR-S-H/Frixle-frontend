@@ -140,7 +140,7 @@ export function RegisterForm({ className, ...props }) {
                       </form>
                       <div className="relative hidden bg-muted md:block">
                           <img
-                              src="/public/images/authPicture.png"
+                              src="https://res.cloudinary.com/dvlkfh2dl/image/upload/v1734947419/mqloqjjrxt5ooremfga1.png"
                               alt="image"
                               className="absolute inset-0 h-full w-full object-cover"
                           />
