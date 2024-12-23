@@ -8,6 +8,8 @@ export const UserContextProvider = ({ children }) => {
     const { toast } = useToast()
     const [user, setUser] = useState([]);
     const [isAuth, setIsAuth] = useState(false);
+    axios.defaults.withCredentials = true;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
     const [loading, setLoading] = useState(true);
     async function registerUser(formdata, navigate,fetchPosts) {
         setLoading(true);
