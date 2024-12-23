@@ -11,7 +11,7 @@ import { UserData } from '@/context/UserContext';
 import MainLayout from '@/layout/MainLayout';
 import { useTheme } from "@/context/ThemeContext";
 import { Link } from 'react-router-dom';
-const SOCKET_URL = "https://frixle-backend.onrender.com";
+const SOCKET_URL = "http://localhost:8080";
 
 function ChatPage() {
 const [chats, setChats] = useState([]);

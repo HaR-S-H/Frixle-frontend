@@ -3,7 +3,7 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import { UserData } from '@/context/UserContext';
 
-const SOCKET_URL = "https://frixle-backend.onrender.com";
+const SOCKET_URL = "http://localhost:8080";
 
 const ChatContext = createContext();
 

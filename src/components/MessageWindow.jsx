@@ -10,7 +10,7 @@ import { io } from 'socket.io-client';
 import { UserData } from '@/context/UserContext';
 import { useTheme } from "@/context/ThemeContext";
 
-const SOCKET_URL = "https://frixle-backend.onrender.com";
+const SOCKET_URL = "http://localhost:8080";
 
 const MessageWindow = ({ recipientUser, isOpen, onClose, onChatCreated }) => {
   const [messages, setMessages] = useState([]);

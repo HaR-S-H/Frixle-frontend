@@ -12,11 +12,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://frixle-backend.onrender.com',
-        changeOrigin: true, // Modify origin header to match the target
-        secure: true, // Use HTTPS for the backend
-        withCredentials: true
-      },
-    } 
+        target: 'http://localhost:8080',
+      }
+    }
   }
 })
