@@ -15,7 +15,8 @@ export default defineConfig({
         target: 'https://frixle-backend.onrender.com',
         changeOrigin: true, // Modify origin header to match the target
         secure: true, // Use HTTPS for the backend
-        withCredentials: true
+        withCredentials: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
       },
     } 
   }
