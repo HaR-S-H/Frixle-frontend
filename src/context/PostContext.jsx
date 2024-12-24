@@ -11,7 +11,7 @@ export const PostContextProvider = ({ children }) => {
     const [loading,setLoading] = useState(true);
     async function fetchPosts() {
         try {
-            const { data } = await axios.get("/api/v1/posts/all");
+            const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/all`,{ withCredentials: true });
             
             setPosts(data.data);
             setLoading(false);
@@ -23,7 +23,7 @@ export const PostContextProvider = ({ children }) => {
     }
     async function addPost(formdata) {
         try {
-            const { data } = await axios.post("/api/v1/posts/new", formdata);
+            const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/new`, formdata,{ withCredentials: true });
             toast({
                 title: "Hurray!",
                 description: "Post  Added  Successfully 👌"
@@ -40,7 +40,7 @@ export const PostContextProvider = ({ children }) => {
     }
     async function likePost(id) {
         try {
-            const { data } = await axios.post("/api/v1/posts/like/" + id);
+            const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/like/${id}`, {},{ withCredentials: true });
             
             toast({
                 title: "💓",
@@ -54,7 +54,7 @@ export const PostContextProvider = ({ children }) => {
     }
     async function addComment(id,text,setComment) { 
         try {
-            const { data } = await axios.post("/api/v1/posts/comment/" + id,{text});
+            const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/comment/` + id,{text},{ withCredentials: true });
             // console.log(data);
             
             toast({
@@ -76,7 +76,7 @@ export const PostContextProvider = ({ children }) => {
     async function deletePost(id) {
         setLoading(true);
         try {
-            const { data } = await axios.delete("/api/v1/posts/" + id);
+            const { data } = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/${id}`,{},{ withCredentials: true });
             toast({
                 title: "👍",
                 description: "POST deleted!"
@@ -95,7 +95,7 @@ export const PostContextProvider = ({ children }) => {
         try {
             console.log(formData.media);
             
-            const { data } = await axios.put("/api/v1/posts/" + id,formData);
+            const { data } = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/${id}`,formData,{ withCredentials: true });
             toast({
                 title: "👍",
                 description: "Post updated!"
@@ -109,7 +109,7 @@ export const PostContextProvider = ({ children }) => {
     }
     async function deleteComment(id) {
         try {
-            const { data } = await axios.delete("/api/v1/posts/comment/" + id);
+            const { data } = await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/comment/` + id,{},{ withCredentials: true });
             toast({
                 title: "🤐",
                 description: "Comment deleted!"
@@ -125,7 +125,7 @@ export const PostContextProvider = ({ children }) => {
     }
     async function editComment(id,text) {
         try {
-            const { data } = await axios.put("/api/v1/posts/comment/" + id, { text });
+            const { data } = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/posts/comment/` + id, { text },{ withCredentials: true });
             toast({
                 title: "😏",
                 description: "Comment edited!"

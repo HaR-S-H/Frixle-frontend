@@ -3,7 +3,7 @@ import axios from 'axios';
 import { io } from 'socket.io-client';
 import { UserData } from '@/context/UserContext';
 
-const SOCKET_URL = "http://localhost:8080";
+const SOCKET_URL = "https://frixle-backend.onrender.com";
 
 const ChatContext = createContext();
 
@@ -74,10 +74,10 @@ export const ChatProvider = ({ children }) => {
 
   const handleSendMessage = async ({ text, receiverId, messageObj }) => {
     try {
-      const { data } = await axios.post("/api/v1/chats", {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats`, {
         text,
         recieverId: receiverId
-      });
+      },{ withCredentials: true });
 
       setMessages(prev => 
         prev.map(msg => 
@@ -108,7 +108,7 @@ export const ChatProvider = ({ children }) => {
   const fetchChats = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get("/api/v1/chats/all");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats/all`,{ withCredentials: true });
       setChats(data);
     } catch (error) {
       console.error("Error fetching chats:", error);
@@ -121,7 +121,7 @@ export const ChatProvider = ({ children }) => {
   const fetchMessages = async (userId) => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`/api/v1/chats/${userId}`);
+      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats/${userId}`,{ withCredentials: true });
       setMessages(data);
     } catch (error) {
       console.error("Error fetching messages:", error);

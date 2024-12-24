@@ -12,7 +12,7 @@ export const UserContextProvider = ({ children }) => {
     async function registerUser(formdata, navigate,fetchPosts) {
         setLoading(true);
         try {
-            const { data } = await axios.post("/api/v1/auth/signup",formdata);
+            const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/signup`,formdata,{ withCredentials: true });
             console.log(data);
             
             toast({
@@ -37,8 +37,10 @@ export const UserContextProvider = ({ children }) => {
     async function loginUser(email, password, navigate,fetchPosts) {
         setLoading(true);
         try {
-            const { data } = await axios.post("/api/v1/auth/login", { email, password });
+            const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/login`, { email, password }, { withCredentials: true });
+            console.log("ja");
             
+            console.log(data);
             toast({
                 title: "Congratulations!",
                 description: "You have Logged in successfully"
@@ -62,7 +64,7 @@ export const UserContextProvider = ({ children }) => {
     }
     async function fetchUser() {
     try {
-        const { data } = await axios.get("/api/v1/users/me");
+        const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/me`,{ withCredentials: true });
         setUser(data.data);
         setIsAuth(true);
         setLoading(false);
@@ -76,7 +78,7 @@ export const UserContextProvider = ({ children }) => {
     }
     async function logoutUser() { 
         try {
-            const { data } = await axios.post("/api/v1/auth/logout");
+            const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/auth/logout`, {},{ withCredentials: true });
             if (data.message) {
                     toast({
                         title: "Logged Out",
@@ -98,13 +100,13 @@ export const UserContextProvider = ({ children }) => {
        
         try {
             if (isFollowing) {
-                const { data } = await axios.post("/api/v1/users/unfollow/" + id);
+                const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/unfollow/${ id }`, {},{ withCredentials: true });
                 toast({
                     title: "😒",
                     description: "You unfollowed this Account !",
                 })
             } else {
-                const { data } = await axios.post("/api/v1/users/follow/" + id);
+                const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/follow/${id}`,{},{ withCredentials: true });
            
                 toast({
                     title: "😏",
@@ -121,7 +123,7 @@ export const UserContextProvider = ({ children }) => {
     }
     async function updateProfile(formData) {
         try {
-            const { data } = await axios.put("/api/v1/users/update",formData);
+            const { data } = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/update`,formData,{ withCredentials: true });
             toast({
                 title: "😎",
                 description: "Profile updated!",

@@ -10,7 +10,7 @@ import { io } from 'socket.io-client';
 import { UserData } from '@/context/UserContext';
 import { useTheme } from "@/context/ThemeContext";
 
-const SOCKET_URL = "http://localhost:8080";
+const SOCKET_URL = "https://frixle-backend.onrender.com";
 
 const MessageWindow = ({ recipientUser, isOpen, onClose, onChatCreated }) => {
   const [messages, setMessages] = useState([]);
@@ -74,7 +74,7 @@ const MessageWindow = ({ recipientUser, isOpen, onClose, onChatCreated }) => {
     const fetchMessages = async () => {
       try {
         setIsLoading(true);
-        const { data } = await axios.get(`/api/v1/chats/${recipientUser._id}`);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats/${recipientUser._id}`,{ withCredentials: true });
         setMessages(data);
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -107,10 +107,10 @@ const MessageWindow = ({ recipientUser, isOpen, onClose, onChatCreated }) => {
       setMessages(prev => [...prev, newMessageObj]);
       setNewMessage('');
 
-      const { data } = await axios.post("/api/v1/chats", {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats`, {
         text: newMessage,
         recieverId: recipientUser._id
-      });
+      },{ withCredentials: true });
 
       // Create chat data
       const chatData = {

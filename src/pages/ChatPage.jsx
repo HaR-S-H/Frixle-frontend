@@ -11,7 +11,7 @@ import { UserData } from '@/context/UserContext';
 import MainLayout from '@/layout/MainLayout';
 import { useTheme } from "@/context/ThemeContext";
 import { Link } from 'react-router-dom';
-const SOCKET_URL = "http://localhost:8080";
+const SOCKET_URL = "https://frixle-backend.onrender.com";
 
 function ChatPage() {
 const [chats, setChats] = useState([]);
@@ -130,7 +130,7 @@ const updateChatWithLatestMessage = (message) => {
 const fetchChats = async () => {
     try {
     setIsLoading(true);
-    const { data } = await axios.get("/api/v1/chats/all");
+    const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats/all`,{ withCredentials: true });
     setChats(data);
     } catch (error) {
     console.error("Error fetching chats:", error);
@@ -142,7 +142,7 @@ const fetchChats = async () => {
 // Fetch all users
 const fetchUsers = async () => {
     try {
-    const { data } = await axios.get("/api/v1/users/all");
+    const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/all`,{ withCredentials: true });
     setUsers(data.data || []);
     } catch (error) {
     console.error("Error fetching users:", error);
@@ -153,7 +153,7 @@ const fetchUsers = async () => {
 const fetchMessages = async (userId) => {
     try {
     setIsLoading(true);
-    const { data } = await axios.get(`/api/v1/chats/${userId}`);
+    const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats/${userId}`,{ withCredentials: true });
     setMessages(data);
     } catch (error) {
     console.error("Error fetching messages:", error);
@@ -184,10 +184,10 @@ const handleSendMessage = async () => {
         setNewMessage('');
 
         // Send to server
-        const { data } = await axios.post("/api/v1/chats", {
+        const { data } = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/v1/chats`, {
             text: newMessage,
             recieverId: receiverId
-        });
+        },{ withCredentials: true });
 
         // Update the temporary message with the real one
         setMessages(prev => 
@@ -335,7 +335,7 @@ const filteredChats = chats.filter(chat =>
             {selectedChat ? (
             <>
                                 {/* Chat Header */}
-                                <Link to={"/user/"+selectedChat?.users[0]?._id}>
+                                {/* <Link to={"/user/"+selectedChat?.users[0]?._id}> */}
                 <div className={`flex items-center space-x-4 p-4 border-b ${
                 isDark ? "border-gray-800" : "border-gray-200"
                 }`}>
@@ -346,7 +346,8 @@ const filteredChats = chats.filter(chat =>
                     className={isDark ? "text-gray-100 hover:text-gray-300" : ""}
                 >
                     <ChevronLeft className="h-4 w-4" />
-                </Button>
+                                    </Button>
+                                    <Link to={"/user/"+selectedChat?.users[0]?._id}>
                 <Avatar>
                     <AvatarImage src={selectedChat.users[0].avatar} />
                     <AvatarFallback className={isDark ? "bg-gray-700" : ""}>
@@ -358,9 +359,10 @@ const filteredChats = chats.filter(chat =>
                     {onlineUsers.includes(selectedChat.users[0]._id) && (
                     <p className="text-sm text-green-500">Online</p>
                     )}
+                                        </div>
+                                        </Link>
                 </div>
-                </div>
-                </Link>
+                {/* </Link> */}
                 {/* Messages Area */}
                 <div className="flex-1 overflow-hidden">
                 <ScrollArea className="h-full p-4">

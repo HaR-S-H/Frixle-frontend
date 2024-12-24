@@ -39,7 +39,11 @@ const UserAccount = () => {
 
     async function fetchUser() {
         try {
-            const { data } = await axios.post("/api/v1/users/" + params.id);
+            const { data } = await axios.post(
+                `${import.meta.env.VITE_API_BASE_URL}/api/v1/users/${params.id}`,
+                {}, // request body
+                { withCredentials: true } // config object
+              );
             setUser(data.data);
             setLoading(false);
         } catch (error) {

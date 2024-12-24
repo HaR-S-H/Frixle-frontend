@@ -19,7 +19,7 @@ const SearchPage = () => {
     try {
       setIsLoading(true);
       setError(null);
-      const { data } = await axios.get("/api/v1/users/all");
+      const { data } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/v1/users/all`,{ withCredentials: true });
       setUsers(data.data || []);
     } catch (error) {
       console.error("Error fetching users:", error);
